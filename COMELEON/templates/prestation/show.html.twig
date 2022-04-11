@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <section class="centrer">
+        <h2> {{ prestation.title }}</h2>
+        <br>
+        <div class="metadata">Ecrit le {{ prestation.createdAt | date('d/m/Y') }} à {{ prestation.createdAt | date('H:i') }}
+            Dans la catégorie {{ prestation.categorie.title }} </div>
+            <div class="content">
+                <img src=" {{ prestation.img }} ">
+                <br><br>
+                {{ prestation.description }}
+            </div>
+            <br><br>
+            <p>Prix : {{ prestation.price }} €</p>
+            <br>
+            <form method="post" action="/prestation">
+                <button type="submit" class="btn btn-secondary">Retour</button>
+            </form>
+            <a href="{{ path('cart_add', {'id': prestation.id}) }}" class="btn btn-success float-right">
+                <i class="fas fa-shopping-cart mr-1"></i>Ajouter au panier
+            </a>
+
+            <br><br><br><br><br>
+    </section>
+    Commentaires
+    <br><br><br><br><br><br>
+    <section id="commentaire">
+    {% for commentaire in prestation.commentaires %}
+        <div class="commentaire">
+            <div class="row">
+                <div class="col-3">
+                    {{ commentaire.author }} (<small>{{commentaire.createdAt | date('d/m/Y à H:i') }}</small>)
+                </div>
+            <div class="col">
+                {{commentaire.content | raw }}
+            </div>
+        </div>
+        <br><br>
+</div>
+{% endfor %}
+    </section>
+</div>
+
+{% endblock %}
